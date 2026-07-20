@@ -1,0 +1,163 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+
+type Lang = "en" | "ur";
+
+const dict = {
+  en: {
+    appName: "Welfare Fund",
+    tagline: "Community Welfare Fund Management",
+    home: "Home",
+    families: "Families",
+    collections: "Collections",
+    expenses: "Expenses",
+    events: "Events",
+    reports: "Reports",
+    dashboard: "Dashboard",
+    admin: "Admin",
+    login: "Login",
+    logout: "Logout",
+    email: "Email",
+    password: "Password",
+    signIn: "Sign in",
+    fundBalance: "Fund Balance",
+    totalCollections: "Total Collections",
+    totalExpenses: "Total Expenses",
+    totalFamilies: "Total Families",
+    recentCollections: "Recent Collections",
+    recentExpenses: "Recent Expenses",
+    recentEvents: "Recent Events",
+    welfareEvents: "Welfare Events",
+    search: "Search",
+    add: "Add",
+    edit: "Edit",
+    delete: "Delete",
+    save: "Save",
+    cancel: "Cancel",
+    family: "Family",
+    head: "Head of Family",
+    phone: "Phone",
+    address: "Address",
+    status: "Status",
+    active: "Active",
+    inactive: "Inactive",
+    monthly: "Monthly",
+    special: "Special",
+    amount: "Amount",
+    date: "Date",
+    notes: "Notes",
+    type: "Type",
+    monthsCovered: "Months Covered",
+    category: "Category",
+    description: "Description",
+    relatedEvent: "Related Event",
+    eventDate: "Event Date",
+    food: "Food",
+    tent: "Tent",
+    transport: "Transport",
+    misc: "Miscellaneous",
+    bereavement: "Bereavement (Foatgi)",
+    noData: "No records yet",
+    confirmDelete: "Are you sure you want to delete this?",
+    exportPdf: "Export PDF",
+    exportExcel: "Export Excel",
+    contribution: "Contribution",
+    lastContribution: "Last Contribution",
+    viewAll: "View all",
+    publicView: "Public view — read only",
+  },
+  ur: {
+    appName: "فلاحی فنڈ",
+    tagline: "کمیونٹی فلاحی فنڈ کا انتظام",
+    home: "ہوم",
+    families: "خاندان",
+    collections: "وصولیاں",
+    expenses: "اخراجات",
+    events: "تقریبات",
+    reports: "رپورٹس",
+    dashboard: "ڈیش بورڈ",
+    admin: "ایڈمن",
+    login: "لاگ ان",
+    logout: "لاگ آؤٹ",
+    email: "ای میل",
+    password: "پاس ورڈ",
+    signIn: "داخل ہوں",
+    fundBalance: "موجودہ فنڈ",
+    totalCollections: "کل وصولیاں",
+    totalExpenses: "کل اخراجات",
+    totalFamilies: "کل خاندان",
+    recentCollections: "حالیہ وصولیاں",
+    recentExpenses: "حالیہ اخراجات",
+    recentEvents: "حالیہ تقریبات",
+    welfareEvents: "فلاحی تقریبات",
+    search: "تلاش",
+    add: "شامل کریں",
+    edit: "ترمیم",
+    delete: "حذف",
+    save: "محفوظ",
+    cancel: "منسوخ",
+    family: "خاندان",
+    head: "سربراہ",
+    phone: "فون",
+    address: "پتہ",
+    status: "حیثیت",
+    active: "فعال",
+    inactive: "غیر فعال",
+    monthly: "ماہانہ",
+    special: "خصوصی",
+    amount: "رقم",
+    date: "تاریخ",
+    notes: "نوٹس",
+    type: "قسم",
+    monthsCovered: "ماہ",
+    category: "زمرہ",
+    description: "تفصیل",
+    relatedEvent: "متعلقہ تقریب",
+    eventDate: "تقریب کی تاریخ",
+    food: "کھانا",
+    tent: "خیمہ",
+    transport: "ٹرانسپورٹ",
+    misc: "متفرق",
+    bereavement: "فوتگی",
+    noData: "کوئی ریکارڈ نہیں",
+    confirmDelete: "کیا آپ واقعی حذف کرنا چاہتے ہیں؟",
+    exportPdf: "پی ڈی ایف",
+    exportExcel: "ایکسل",
+    contribution: "حصہ",
+    lastContribution: "آخری حصہ",
+    viewAll: "سب دیکھیں",
+    publicView: "پبلک نظارہ — صرف پڑھنے کے لیے",
+  },
+} as const;
+
+type Key = keyof typeof dict["en"];
+
+type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: Key) => string };
+
+const LangContext = createContext<Ctx | null>(null);
+
+export function LangProvider({ children }: { children: ReactNode }) {
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "en";
+    return (localStorage.getItem("lang") as Lang) || "en";
+  });
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ur" ? "rtl" : "ltr";
+    localStorage.setItem("lang", lang);
+  }, [lang]);
+
+  const value: Ctx = {
+    lang,
+    setLang: setLangState,
+    t: (k) => dict[lang][k] ?? dict.en[k] ?? k,
+  };
+  return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
+}
+
+export function useT() {
+  const ctx = useContext(LangContext);
+  if (!ctx) throw new Error("useT must be used inside LangProvider");
+  return ctx;
+}
