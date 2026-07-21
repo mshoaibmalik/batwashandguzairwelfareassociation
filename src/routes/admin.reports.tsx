@@ -180,6 +180,8 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
     }
   };
 
+  const currentMonth = new Date().getMonth();
+
   const handleExportPdf = () => {
     const headers = ["Family", ...MONTHS.map(m => m.slice(0, 3))];
     const rows = filteredFamilies.map((f: any) => {
@@ -187,10 +189,19 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
       MONTHS.forEach((month, idx) => {
         const isFuture = idx > currentMonth && selectedYear === currentYear;
         if (isFuture) {
-          row.push("—");
+          row.push("-");
         } else {
-          const status = getPaymentStatus(f.id, month);
-          row.push(status === "paid" ? "✔" : "✖");
+          // Check if month is before family was created
+          const familyCreatedAt = f.createdAt ? new Date(f.createdAt) : new Date();
+          const monthDate = new Date(selectedYear, idx, 1);
+          const isNotApplied = monthDate < new Date(familyCreatedAt.getFullYear(), familyCreatedAt.getMonth(), 1);
+          
+          if (isNotApplied) {
+            row.push("N/A");
+          } else {
+            const status = getPaymentStatus(f.id, month);
+            row.push(status === "paid" ? "✔" : "✖");
+          }
         }
       });
       return row;
@@ -227,8 +238,6 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
       filename: `collection-insights-${selectedYear}`,
     });
   };
-
-  const currentMonth = new Date().getMonth();
 
   return (
     <div className="space-y-3">
