@@ -165,7 +165,7 @@ const dict = {
   },
 } as const;
 
-type Key = keyof typeof dict["en"];
+type Key = keyof (typeof dict)["en"];
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: Key) => string };
 

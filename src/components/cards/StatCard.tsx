@@ -22,10 +22,14 @@ export function StatCard({
     muted: "from-muted to-muted text-foreground",
   };
   return (
-    <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br p-4 sm:p-5 shadow-lg ${tones[tone]}`}>
+    <div
+      className={`relative overflow-hidden rounded-2xl bg-gradient-to-br p-4 sm:p-5 shadow-lg ${tones[tone]}`}
+    >
       <div className="relative z-10 flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="text-[10px] sm:text-xs font-medium uppercase tracking-wide opacity-90">{label}</div>
+          <div className="text-[10px] sm:text-xs font-medium uppercase tracking-wide opacity-90">
+            {label}
+          </div>
           <div className="mt-1.5 text-lg sm:text-2xl font-bold leading-tight">{value}</div>
           {hint ? <div className="text-[10px] sm:text-xs opacity-80 mt-1">{hint}</div> : null}
         </div>
@@ -58,7 +62,5 @@ export function SectionCard({
 }
 
 export function EmptyState({ message }: { message: string }) {
-  return (
-    <div className="py-8 text-center text-sm text-muted-foreground">{message}</div>
-  );
+  return <div className="py-8 text-center text-sm text-muted-foreground">{message}</div>;
 }

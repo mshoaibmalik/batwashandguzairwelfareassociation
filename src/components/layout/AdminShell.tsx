@@ -73,9 +73,7 @@ export function AdminShell({ children, title }: { children: ReactNode; title?: s
                       to={it.to}
                       onClick={() => setOpen(false)}
                       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
-                        active
-                          ? "bg-primary/10 text-primary"
-                          : "text-foreground/80 hover:bg-muted"
+                        active ? "bg-primary/10 text-primary" : "text-foreground/80 hover:bg-muted"
                       }`}
                     >
                       <Icon className="h-4 w-4" />

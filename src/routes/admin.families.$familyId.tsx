@@ -5,7 +5,13 @@ import { useStore, familyTotals } from "@/lib/store";
 import { useT } from "@/lib/i18n";
 import { formatRs, formatDate, formatMonth } from "@/lib/money";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ArrowLeft, Download } from "lucide-react";
 import { EmptyState, SectionCard } from "@/components/cards/StatCard";
 import { exportFamilyPaymentPdf } from "@/lib/export";
@@ -21,7 +27,10 @@ export default function AdminFamilyDetail() {
     return (
       <AdminShell title={t("families")}>
         <div className="space-y-4">
-          <Link to="/admin/families" className="inline-flex items-center gap-1 text-sm text-primary">
+          <Link
+            to="/admin/families"
+            className="inline-flex items-center gap-1 text-sm text-primary"
+          >
             <ArrowLeft className="h-4 w-4" />
             {t("families")}
           </Link>
@@ -61,7 +70,7 @@ export default function AdminFamilyDetail() {
     for (const c of familyCollections) {
       const year = c.date.slice(0, 4);
       if (!paymentsByYear[year]) paymentsByYear[year] = [];
-      
+
       const payment: any = {
         date: formatDate(c.date),
         type: c.type,
@@ -99,7 +108,10 @@ export default function AdminFamilyDetail() {
     <AdminShell title={family.name}>
       <div className="space-y-3 sm:space-y-4">
         <div className="flex items-center justify-between gap-2">
-          <Link to="/admin/families" className="inline-flex items-center gap-1 text-xs sm:text-sm text-primary">
+          <Link
+            to="/admin/families"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm text-primary"
+          >
             <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
             {t("families")}
           </Link>
@@ -116,7 +128,11 @@ export default function AdminFamilyDetail() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Years</SelectItem>
-              {availableYears.map((year) => <SelectItem key={year} value={year}>{year}</SelectItem>)}
+              {availableYears.map((year) => (
+                <SelectItem key={year} value={year}>
+                  {year}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -130,11 +146,13 @@ export default function AdminFamilyDetail() {
               </p>
               <p className="text-[11px] text-muted-foreground sm:text-xs">{family!.address}</p>
             </div>
-            <span className={`inline-flex items-center rounded-full px-2 py-1 text-[10px] font-medium sm:text-xs ${
-              family.status === "active" 
-                ? "bg-success/10 text-success" 
-                : "bg-muted text-muted-foreground"
-            }`}>
+            <span
+              className={`inline-flex items-center rounded-full px-2 py-1 text-[10px] font-medium sm:text-xs ${
+                family.status === "active"
+                  ? "bg-success/10 text-success"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
               {t(family.status)}
             </span>
           </div>
@@ -145,13 +163,19 @@ export default function AdminFamilyDetail() {
 
         <div className="grid grid-cols-2 gap-2 sm:gap-3">
           <SectionCard title={t("totalPaid")}>
-            <div className="text-xl sm:text-2xl font-bold text-primary">{formatRs(totals.total)}</div>
+            <div className="text-xl sm:text-2xl font-bold text-primary">
+              {formatRs(totals.total)}
+            </div>
           </SectionCard>
           <SectionCard title={t("monthly")}>
-            <div className="text-xl sm:text-2xl font-bold text-success">{formatRs(totals.monthly)}</div>
+            <div className="text-xl sm:text-2xl font-bold text-success">
+              {formatRs(totals.monthly)}
+            </div>
           </SectionCard>
           <SectionCard title={t("special")}>
-            <div className="text-xl sm:text-2xl font-bold text-warning">{formatRs(totals.special)}</div>
+            <div className="text-xl sm:text-2xl font-bold text-warning">
+              {formatRs(totals.special)}
+            </div>
           </SectionCard>
           <SectionCard title={t("lastContribution")}>
             <div className="text-base sm:text-lg font-semibold">{formatDate(totals.last)}</div>
@@ -179,13 +203,17 @@ export default function AdminFamilyDetail() {
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
-                              <div className="text-xs font-medium sm:text-sm">{formatDate(c.date)}</div>
+                              <div className="text-xs font-medium sm:text-sm">
+                                {formatDate(c.date)}
+                              </div>
                               <div className="flex items-center gap-2 mt-1">
-                                <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium sm:text-[10px] ${
-                                  c.type === "monthly"
-                                    ? "bg-primary/10 text-primary"
-                                    : "bg-warning/10 text-warning"
-                                }`}>
+                                <span
+                                  className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium sm:text-[10px] ${
+                                    c.type === "monthly"
+                                      ? "bg-primary/10 text-primary"
+                                      : "bg-warning/10 text-warning"
+                                  }`}
+                                >
                                   {t(c.type)}
                                 </span>
                               </div>
@@ -194,14 +222,14 @@ export default function AdminFamilyDetail() {
                               +{formatRs(c.amount)}
                             </div>
                           </div>
-                          
+
                           {c.type === "monthly" && c.monthsCovered?.length > 0 && (
                             <div className="text-[10px] text-muted-foreground sm:text-[11px]">
                               <span className="font-medium">{t("monthsCovered")}:</span>{" "}
                               {c.monthsCovered.map((m) => formatMonth(m)).join(", ")}
                             </div>
                           )}
-                          
+
                           {c.type === "special" && c.eventId && (
                             <div className="text-[10px] text-muted-foreground sm:text-[11px]">
                               <span className="font-medium">{t("relatedEvent")}:</span>{" "}
@@ -213,7 +241,7 @@ export default function AdminFamilyDetail() {
                               })()}
                             </div>
                           )}
-                          
+
                           {c.notes && (
                             <div className="text-[10px] text-muted-foreground italic sm:text-[11px]">
                               {c.notes}

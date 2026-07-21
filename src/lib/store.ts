@@ -112,34 +112,147 @@ function docTo<T extends { id: string }>(d: DocumentData): T {
 const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 
 function generateSeed() {
-  const f1: Family = { id: uid(), name: "Ahmed", head: "Muhammad Ahmed", phone: "0300-1234567", address: "House 12, Street 4", status: "active", createdAt: "2026-01-05" };
-  const f2: Family = { id: uid(), name: "Khan", head: "Asif Khan", phone: "0301-2345678", address: "House 7, Street 1", status: "active", createdAt: "2026-01-05" };
-  const f3: Family = { id: uid(), name: "Siddiqui", head: "Tariq Siddiqui", phone: "0302-3456789", address: "House 22, Street 6", status: "active", createdAt: "2026-01-05" };
-  const f4: Family = { id: uid(), name: "Malik", head: "Imran Malik", phone: "0303-4567890", address: "House 5, Street 2", status: "active", createdAt: "2026-01-05" };
-  const f5: Family = { id: uid(), name: "Sheikh", head: "Bilal Sheikh", phone: "0304-5678901", address: "House 18, Street 9", status: "inactive", createdAt: "2026-01-05" };
+  const f1: Family = {
+    id: uid(),
+    name: "Ahmed",
+    head: "Muhammad Ahmed",
+    phone: "0300-1234567",
+    address: "House 12, Street 4",
+    status: "active",
+    createdAt: "2026-01-05",
+  };
+  const f2: Family = {
+    id: uid(),
+    name: "Khan",
+    head: "Asif Khan",
+    phone: "0301-2345678",
+    address: "House 7, Street 1",
+    status: "active",
+    createdAt: "2026-01-05",
+  };
+  const f3: Family = {
+    id: uid(),
+    name: "Siddiqui",
+    head: "Tariq Siddiqui",
+    phone: "0302-3456789",
+    address: "House 22, Street 6",
+    status: "active",
+    createdAt: "2026-01-05",
+  };
+  const f4: Family = {
+    id: uid(),
+    name: "Malik",
+    head: "Imran Malik",
+    phone: "0303-4567890",
+    address: "House 5, Street 2",
+    status: "active",
+    createdAt: "2026-01-05",
+  };
+  const f5: Family = {
+    id: uid(),
+    name: "Sheikh",
+    head: "Bilal Sheikh",
+    phone: "0304-5678901",
+    address: "House 18, Street 9",
+    status: "inactive",
+    createdAt: "2026-01-05",
+  };
   const families = [f1, f2, f3, f4, f5];
 
   const months = ["2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"];
   const collections: Collection[] = [];
   for (const f of families.filter((x) => x.status === "active")) {
-    collections.push({ id: uid(), familyId: f.id, type: "monthly", amount: 300 * 3, date: "2026-03-10", monthsCovered: months.slice(0, 3), notes: "Q1" });
-    collections.push({ id: uid(), familyId: f.id, type: "monthly", amount: 300 * 3, date: "2026-06-08", monthsCovered: months.slice(3, 6), notes: "Q2" });
+    collections.push({
+      id: uid(),
+      familyId: f.id,
+      type: "monthly",
+      amount: 300 * 3,
+      date: "2026-03-10",
+      monthsCovered: months.slice(0, 3),
+      notes: "Q1",
+    });
+    collections.push({
+      id: uid(),
+      familyId: f.id,
+      type: "monthly",
+      amount: 300 * 3,
+      date: "2026-06-08",
+      monthsCovered: months.slice(3, 6),
+      notes: "Q2",
+    });
   }
 
-  const ev1: WelfareEvent = { id: uid(), familyId: f2.id, eventDate: "2026-04-18", description: "Bereavement of elder family member", type: "bereavement" };
-  const ev2: WelfareEvent = { id: uid(), familyId: f3.id, eventDate: "2026-05-22", description: "Foatgi arrangements", type: "bereavement" };
+  const ev1: WelfareEvent = {
+    id: uid(),
+    familyId: f2.id,
+    eventDate: "2026-04-18",
+    description: "Bereavement of elder family member",
+    type: "bereavement",
+  };
+  const ev2: WelfareEvent = {
+    id: uid(),
+    familyId: f3.id,
+    eventDate: "2026-05-22",
+    description: "Foatgi arrangements",
+    type: "bereavement",
+  };
   const events = [ev1, ev2];
 
   const expenses: Expense[] = [
-    { id: uid(), eventId: ev1.id, category: "food", amount: 18000, date: "2026-04-18", description: "Lunch for 120 people" },
-    { id: uid(), eventId: ev1.id, category: "tent", amount: 6000, date: "2026-04-18", description: "Shamiana" },
+    {
+      id: uid(),
+      eventId: ev1.id,
+      category: "food",
+      amount: 18000,
+      date: "2026-04-18",
+      description: "Lunch for 120 people",
+    },
+    {
+      id: uid(),
+      eventId: ev1.id,
+      category: "tent",
+      amount: 6000,
+      date: "2026-04-18",
+      description: "Shamiana",
+    },
     { id: uid(), eventId: ev1.id, category: "transport", amount: 2500, date: "2026-04-18" },
-    { id: uid(), eventId: ev2.id, category: "food", amount: 22000, date: "2026-05-22", description: "Dinner" },
-    { id: uid(), eventId: ev2.id, category: "misc", amount: 1500, date: "2026-05-22", description: "Supplies" },
+    {
+      id: uid(),
+      eventId: ev2.id,
+      category: "food",
+      amount: 22000,
+      date: "2026-05-22",
+      description: "Dinner",
+    },
+    {
+      id: uid(),
+      eventId: ev2.id,
+      category: "misc",
+      amount: 1500,
+      date: "2026-05-22",
+      description: "Supplies",
+    },
   ];
 
-  collections.push({ id: uid(), familyId: f1.id, type: "special", amount: 1000, date: "2026-04-20", monthsCovered: [], eventId: ev1.id, notes: "Special contribution" });
-  collections.push({ id: uid(), familyId: f4.id, type: "special", amount: 1500, date: "2026-04-20", monthsCovered: [], eventId: ev1.id });
+  collections.push({
+    id: uid(),
+    familyId: f1.id,
+    type: "special",
+    amount: 1000,
+    date: "2026-04-20",
+    monthsCovered: [],
+    eventId: ev1.id,
+    notes: "Special contribution",
+  });
+  collections.push({
+    id: uid(),
+    familyId: f4.id,
+    type: "special",
+    amount: 1500,
+    date: "2026-04-20",
+    monthsCovered: [],
+    eventId: ev1.id,
+  });
 
   return { families, collections, events, expenses };
 }

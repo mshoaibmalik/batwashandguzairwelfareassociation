@@ -21,10 +21,18 @@ export function PublicShell({ children, title }: { children: ReactNode; title?: 
     <div className="mx-auto flex min-h-screen w-full max-w-md flex-col bg-background sm:max-w-2xl lg:max-w-5xl">
       <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-border/60 bg-background/95 px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
         <div className="flex min-w-0 items-center gap-2">
-          <img src={logo} alt="Logo" className="h-8 w-8 shrink-0 rounded-lg object-cover sm:h-9 sm:w-9" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-8 w-8 shrink-0 rounded-lg object-cover sm:h-9 sm:w-9"
+          />
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold leading-tight">{title || t("appName")}</div>
-            <div className="truncate text-[10px] text-muted-foreground sm:text-[11px]">{t("publicView")}</div>
+            <div className="truncate text-sm font-semibold leading-tight">
+              {title || t("appName")}
+            </div>
+            <div className="truncate text-[10px] text-muted-foreground sm:text-[11px]">
+              {t("publicView")}
+            </div>
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-1">

@@ -18,7 +18,12 @@ export default function Expenses() {
   };
 
   const filtered = data.expenses
-    .filter((e) => !q || eventLabel(e.eventId).toLowerCase().includes(q.toLowerCase()) || t(e.category).toLowerCase().includes(q.toLowerCase()))
+    .filter(
+      (e) =>
+        !q ||
+        eventLabel(e.eventId).toLowerCase().includes(q.toLowerCase()) ||
+        t(e.category).toLowerCase().includes(q.toLowerCase()),
+    )
     .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
@@ -42,12 +47,23 @@ export default function Expenses() {
                   <div className="truncate text-sm font-medium">{eventLabel(e.eventId)}</div>
                   <div className="flex items-center gap-2 text-[10px] text-muted-foreground sm:text-[11px]">
                     <span>{formatDate(e.date)}</span>
-                    <Badge variant="outline" className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{t(e.category)}</Badge>
+                    <Badge
+                      variant="outline"
+                      className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]"
+                    >
+                      {t(e.category)}
+                    </Badge>
                   </div>
                 </div>
-                <div className="shrink-0 text-sm font-semibold text-destructive">−{formatRs(e.amount)}</div>
+                <div className="shrink-0 text-sm font-semibold text-destructive">
+                  −{formatRs(e.amount)}
+                </div>
               </div>
-              {e.description && <div className="mt-1.5 text-[10px] text-muted-foreground sm:text-[11px]">{e.description}</div>}
+              {e.description && (
+                <div className="mt-1.5 text-[10px] text-muted-foreground sm:text-[11px]">
+                  {e.description}
+                </div>
+              )}
             </div>
           ))}
           {filtered.length === 0 && (

@@ -5,7 +5,13 @@ import { useT } from "@/lib/i18n";
 import { formatRs, formatDate, formatMonth } from "@/lib/money";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { FileDown, FileSpreadsheet, Search } from "lucide-react";
 import { exportExcel, exportPdf } from "@/lib/export";
@@ -28,20 +34,31 @@ export default function ReportsPage() {
 
   // Collection report (by month)
   const collByMonth = groupBy(data.collections, (c) => c.date.slice(0, 7));
-  const collRows = Object.keys(collByMonth).sort().map((m) => {
-    const total = collByMonth[m].reduce((a, b) => a + b.amount, 0);
-    return [formatMonth(m), collByMonth[m].length, formatRs(total)];
-  });
+  const collRows = Object.keys(collByMonth)
+    .sort()
+    .map((m) => {
+      const total = collByMonth[m].reduce((a, b) => a + b.amount, 0);
+      return [formatMonth(m), collByMonth[m].length, formatRs(total)];
+    });
 
   const expByMonth = groupBy(data.expenses, (e) => e.date.slice(0, 7));
-  const expRows = Object.keys(expByMonth).sort().map((m) => {
-    const total = expByMonth[m].reduce((a, b) => a + b.amount, 0);
-    return [formatMonth(m), expByMonth[m].length, formatRs(total)];
-  });
+  const expRows = Object.keys(expByMonth)
+    .sort()
+    .map((m) => {
+      const total = expByMonth[m].reduce((a, b) => a + b.amount, 0);
+      return [formatMonth(m), expByMonth[m].length, formatRs(total)];
+    });
 
   const famRows = data.families.map((f) => {
     const tot = familyTotals(f.id, data);
-    return [f.name, f.head, formatRs(tot.monthly), formatRs(tot.special), formatRs(tot.total), formatDate(tot.last)];
+    return [
+      f.name,
+      f.head,
+      formatRs(tot.monthly),
+      formatRs(tot.special),
+      formatRs(tot.total),
+      formatDate(tot.last),
+    ];
   });
 
   const balanceRows = [
@@ -66,24 +83,69 @@ export default function ReportsPage() {
       <Tabs defaultValue="balance">
         <div className="w-full overflow-x-auto scrollbar-hide -mx-3 sm:mx-0 mb-3">
           <TabsList className="flex w-max min-w-full gap-1.5 px-3 sm:px-0">
-            <TabsTrigger value="balance" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Balance</TabsTrigger>
-            <TabsTrigger value="coll" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Coll.</TabsTrigger>
-            <TabsTrigger value="exp" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Exp.</TabsTrigger>
-            <TabsTrigger value="fam" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Fam.</TabsTrigger>
-            <TabsTrigger value="insights" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">{t("collectionInsights")}</TabsTrigger>
+            <TabsTrigger
+              value="balance"
+              className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap"
+            >
+              Balance
+            </TabsTrigger>
+            <TabsTrigger
+              value="coll"
+              className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap"
+            >
+              Coll.
+            </TabsTrigger>
+            <TabsTrigger
+              value="exp"
+              className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap"
+            >
+              Exp.
+            </TabsTrigger>
+            <TabsTrigger
+              value="fam"
+              className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap"
+            >
+              Fam.
+            </TabsTrigger>
+            <TabsTrigger
+              value="insights"
+              className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap"
+            >
+              {t("collectionInsights")}
+            </TabsTrigger>
           </TabsList>
         </div>
         <TabsContent value="balance" className="mt-3">
-          <Report title="Fund Balance" headers={["Metric", "Value"]} rows={balanceRows} filename="balance-report" />
+          <Report
+            title="Fund Balance"
+            headers={["Metric", "Value"]}
+            rows={balanceRows}
+            filename="balance-report"
+          />
         </TabsContent>
         <TabsContent value="coll" className="mt-3">
-          <Report title="Collections by Month" headers={["Month", "Records", "Total"]} rows={collRows} filename="collections-report" />
+          <Report
+            title="Collections by Month"
+            headers={["Month", "Records", "Total"]}
+            rows={collRows}
+            filename="collections-report"
+          />
         </TabsContent>
         <TabsContent value="exp" className="mt-3">
-          <Report title="Expenses by Month" headers={["Month", "Records", "Total"]} rows={expRows} filename="expenses-report" />
+          <Report
+            title="Expenses by Month"
+            headers={["Month", "Records", "Total"]}
+            rows={expRows}
+            filename="expenses-report"
+          />
         </TabsContent>
         <TabsContent value="fam" className="mt-3">
-          <Report title="Family Contributions" headers={["Family", "Head", "Monthly", "Special", "Total", "Last"]} rows={famRows} filename="families-report" />
+          <Report
+            title="Family Contributions"
+            headers={["Family", "Head", "Monthly", "Special", "Total", "Last"]}
+            rows={famRows}
+            filename="families-report"
+          />
         </TabsContent>
         <TabsContent value="insights" className="mt-3">
           <CollectionInsights data={data} years={years} currentYear={currentYear} />
@@ -93,14 +155,40 @@ export default function ReportsPage() {
   );
 }
 
-function Report({ title, headers, rows, filename }: { title: string; headers: string[]; rows: (string | number)[][]; filename: string }) {
+function Report({
+  title,
+  headers,
+  rows,
+  filename,
+}: {
+  title: string;
+  headers: string[];
+  rows: (string | number)[][];
+  filename: string;
+}) {
   return (
     <SectionCard
       title={title}
       action={
         <div className="flex gap-1">
-          <Button size="sm" variant="outline" className="h-8" onClick={() => exportPdf({ title, headers, rows, filename })}><FileDown className="mr-1 h-3 w-3" />PDF</Button>
-          <Button size="sm" variant="outline" className="h-8" onClick={() => exportExcel({ sheetName: title, headers, rows, filename })}><FileSpreadsheet className="mr-1 h-3 w-3" />Excel</Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8"
+            onClick={() => exportPdf({ title, headers, rows, filename })}
+          >
+            <FileDown className="mr-1 h-3 w-3" />
+            PDF
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8"
+            onClick={() => exportExcel({ sheetName: title, headers, rows, filename })}
+          >
+            <FileSpreadsheet className="mr-1 h-3 w-3" />
+            Excel
+          </Button>
         </div>
       }
     >
@@ -108,17 +196,31 @@ function Report({ title, headers, rows, filename }: { title: string; headers: st
         <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-border/60 text-left text-[11px] uppercase text-muted-foreground">
-              {headers.map((h) => <th key={h} className="py-2 pr-3 font-medium">{h}</th>)}
+              {headers.map((h) => (
+                <th key={h} className="py-2 pr-3 font-medium">
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={headers.length} className="py-6 text-center text-muted-foreground">No data</td></tr>
-            ) : rows.map((r, i) => (
-              <tr key={i} className="border-b border-border/40">
-                {r.map((c, j) => <td key={j} className="py-2 pr-3">{c}</td>)}
+              <tr>
+                <td colSpan={headers.length} className="py-6 text-center text-muted-foreground">
+                  No data
+                </td>
               </tr>
-            ))}
+            ) : (
+              rows.map((r, i) => (
+                <tr key={i} className="border-b border-border/40">
+                  {r.map((c, j) => (
+                    <td key={j} className="py-2 pr-3">
+                      {c}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -126,9 +228,30 @@ function Report({ title, headers, rows, filename }: { title: string; headers: st
   );
 }
 
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-function CollectionInsights({ data, years, currentYear }: { data: any; years: number[]; currentYear: number }) {
+function CollectionInsights({
+  data,
+  years,
+  currentYear,
+}: {
+  data: any;
+  years: number[];
+  currentYear: number;
+}) {
   const { t } = useT();
   const [selectedYear, setSelectedYear] = useState<number>(currentYear);
   const [searchQuery, setSearchQuery] = useState("");
@@ -141,28 +264,27 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
 
   const filteredFamilies = useMemo(() => {
     if (!searchQuery) return activeFamilies;
-    return activeFamilies.filter((f: any) => 
-      f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.head.toLowerCase().includes(searchQuery.toLowerCase())
+    return activeFamilies.filter(
+      (f: any) =>
+        f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        f.head.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [activeFamilies, searchQuery]);
 
   const getPaymentStatus = (familyId: string, month: string) => {
     const monthStr = `${selectedYear}-${String(MONTHS.indexOf(month) + 1).padStart(2, "0")}`;
-    const hasPayment = data.collections.some((c: any) => 
-      c.familyId === familyId && 
-      c.type === "monthly" && 
-      c.monthsCovered?.includes(monthStr)
+    const hasPayment = data.collections.some(
+      (c: any) =>
+        c.familyId === familyId && c.type === "monthly" && c.monthsCovered?.includes(monthStr),
     );
     return hasPayment ? "paid" : "unpaid";
   };
 
   const getPaymentDetails = (familyId: string, month: string) => {
     const monthStr = `${selectedYear}-${String(MONTHS.indexOf(month) + 1).padStart(2, "0")}`;
-    const collection = data.collections.find((c: any) => 
-      c.familyId === familyId && 
-      c.type === "monthly" && 
-      c.monthsCovered?.includes(monthStr)
+    const collection = data.collections.find(
+      (c: any) =>
+        c.familyId === familyId && c.type === "monthly" && c.monthsCovered?.includes(monthStr),
     );
     return collection;
   };
@@ -172,18 +294,22 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
     if (status === "paid") {
       const collection = getPaymentDetails(familyId, month);
       if (collection) {
-        alert(`Payment Details:\n\nDate: ${formatDate(collection.date)}\nAmount: ${formatRs(collection.amount)}\nMonths Covered: ${collection.monthsCovered?.map((m: string) => formatMonth(m)).join(", ")}\nTransaction ID: ${collection.id}`);
+        alert(
+          `Payment Details:\n\nDate: ${formatDate(collection.date)}\nAmount: ${formatRs(collection.amount)}\nMonths Covered: ${collection.monthsCovered?.map((m: string) => formatMonth(m)).join(", ")}\nTransaction ID: ${collection.id}`,
+        );
       }
     } else {
       const family = data.families.find((f: any) => f.id === familyId);
-      alert(`Payment not received for ${family?.name} - ${month} ${selectedYear}\n\nClick "Quick Add Collection" to record payment.`);
+      alert(
+        `Payment not received for ${family?.name} - ${month} ${selectedYear}\n\nClick "Quick Add Collection" to record payment.`,
+      );
     }
   };
 
   const currentMonth = new Date().getMonth();
 
   const handleExportPdf = () => {
-    const headers = ["Family", ...MONTHS.map(m => m.slice(0, 3))];
+    const headers = ["Family", ...MONTHS.map((m) => m.slice(0, 3))];
     const rows = filteredFamilies.map((f: any) => {
       const row = [f.name];
       MONTHS.forEach((month, idx) => {
@@ -194,8 +320,9 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
           // Check if month is before family was created
           const familyCreatedAt = f.createdAt ? new Date(f.createdAt) : new Date();
           const monthDate = new Date(selectedYear, idx, 1);
-          const isNotApplied = monthDate < new Date(familyCreatedAt.getFullYear(), familyCreatedAt.getMonth(), 1);
-          
+          const isNotApplied =
+            monthDate < new Date(familyCreatedAt.getFullYear(), familyCreatedAt.getMonth(), 1);
+
           if (isNotApplied) {
             row.push("N/A");
           } else {
@@ -216,7 +343,7 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
   };
 
   const handleExportExcel = () => {
-    const headers = ["Family", ...MONTHS.map(m => m.slice(0, 3))];
+    const headers = ["Family", ...MONTHS.map((m) => m.slice(0, 3))];
     const rows = filteredFamilies.map((f: any) => {
       const row = [f.name];
       MONTHS.forEach((month, idx) => {
@@ -248,7 +375,11 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {years.map((year) => <SelectItem key={year} value={String(year)}>{year}</SelectItem>)}
+              {years.map((year) => (
+                <SelectItem key={year} value={String(year)}>
+                  {year}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 
@@ -295,11 +426,23 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
           </div>
 
           <div className="flex gap-2">
-            <Button size="sm" variant="outline" className="h-9 flex-1 sm:flex-none" onClick={handleExportPdf}>
-              <FileDown className="mr-1 h-3 w-3" />PDF
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-9 flex-1 sm:flex-none"
+              onClick={handleExportPdf}
+            >
+              <FileDown className="mr-1 h-3 w-3" />
+              PDF
             </Button>
-            <Button size="sm" variant="outline" className="h-9 flex-1 sm:flex-none" onClick={handleExportExcel}>
-              <FileSpreadsheet className="mr-1 h-3 w-3" />Excel
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-9 flex-1 sm:flex-none"
+              onClick={handleExportExcel}
+            >
+              <FileSpreadsheet className="mr-1 h-3 w-3" />
+              Excel
             </Button>
           </div>
         </div>
@@ -312,21 +455,27 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
               {t("family")}
             </div>
             {MONTHS.map((month, idx) => (
-              <div key={month} className={`p-1 sm:p-1.5 text-center text-[8px] sm:text-[9px] font-medium ${idx === currentMonth ? "bg-primary/10 text-primary" : "bg-muted/50"}`}>
+              <div
+                key={month}
+                className={`p-1 sm:p-1.5 text-center text-[8px] sm:text-[9px] font-medium ${idx === currentMonth ? "bg-primary/10 text-primary" : "bg-muted/50"}`}
+              >
                 {month.slice(0, 3)}
               </div>
             ))}
 
             {filteredFamilies.map((family: any) => (
               <>
-                <div key={family.id} className="sticky left-0 z-10 bg-background p-1 sm:p-1.5 text-[9px] sm:text-[10px] font-medium truncate">
+                <div
+                  key={family.id}
+                  className="sticky left-0 z-10 bg-background p-1 sm:p-1.5 text-[9px] sm:text-[10px] font-medium truncate"
+                >
                   {family.name}
                 </div>
                 {MONTHS.map((month, idx) => {
                   const isFuture = idx > currentMonth && selectedYear === currentYear;
                   const status = getPaymentStatus(family.id, month);
                   const isFiltered = statusFilter !== "all" && statusFilter !== status;
-                  
+
                   if (isFuture) {
                     return (
                       <div
@@ -351,7 +500,8 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                   }
 
                   const details = getPaymentDetails(family.id, month);
-                  const isHovered = hoveredCell?.familyId === family.id && hoveredCell?.month === month;
+                  const isHovered =
+                    hoveredCell?.familyId === family.id && hoveredCell?.month === month;
 
                   return (
                     <div
@@ -364,9 +514,17 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                       onClick={() => handleCellClick(family.id, month)}
                       onMouseEnter={() => setHoveredCell({ familyId: family.id, month })}
                       onMouseLeave={() => setHoveredCell(null)}
-                      title={isHovered ? (status === "paid" ? t("paymentReceived") : t("paymentNotReceived")) : ""}
+                      title={
+                        isHovered
+                          ? status === "paid"
+                            ? t("paymentReceived")
+                            : t("paymentNotReceived")
+                          : ""
+                      }
                     >
-                      <span className="text-[10px] sm:text-xs font-bold">{status === "paid" ? "✔" : "✖"}</span>
+                      <span className="text-[10px] sm:text-xs font-bold">
+                        {status === "paid" ? "✔" : "✖"}
+                      </span>
                     </div>
                   );
                 })}
@@ -376,9 +534,7 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
         </div>
       </div>
 
-      {filteredFamilies.length === 0 && (
-        <EmptyState message={t("noData")} />
-      )}
+      {filteredFamilies.length === 0 && <EmptyState message={t("noData")} />}
     </div>
   );
 }

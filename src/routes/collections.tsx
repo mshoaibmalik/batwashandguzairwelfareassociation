@@ -26,8 +26,12 @@ export default function Collections() {
         <h2 className="text-lg sm:text-xl font-bold tracking-tight">{t("collections")}</h2>
         <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="monthly" className="text-xs sm:text-sm">{t("monthly")}</TabsTrigger>
-            <TabsTrigger value="special" className="text-xs sm:text-sm">{t("special")}</TabsTrigger>
+            <TabsTrigger value="monthly" className="text-xs sm:text-sm">
+              {t("monthly")}
+            </TabsTrigger>
+            <TabsTrigger value="special" className="text-xs sm:text-sm">
+              {t("special")}
+            </TabsTrigger>
           </TabsList>
         </Tabs>
         <div className="relative">
@@ -47,14 +51,28 @@ export default function Collections() {
                   <div className="truncate text-sm font-medium">{familyName(c.familyId)}</div>
                   <div className="mt-1 flex flex-wrap gap-1">
                     {c.monthsCovered.map((m) => (
-                      <Badge key={m} variant="secondary" className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{formatMonth(m)}</Badge>
+                      <Badge
+                        key={m}
+                        variant="secondary"
+                        className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]"
+                      >
+                        {formatMonth(m)}
+                      </Badge>
                     ))}
                   </div>
-                  <div className="mt-1 text-[10px] text-muted-foreground sm:text-[11px]">{formatDate(c.date)}</div>
+                  <div className="mt-1 text-[10px] text-muted-foreground sm:text-[11px]">
+                    {formatDate(c.date)}
+                  </div>
                 </div>
-                <div className="shrink-0 text-sm font-semibold text-success">+{formatRs(c.amount)}</div>
+                <div className="shrink-0 text-sm font-semibold text-success">
+                  +{formatRs(c.amount)}
+                </div>
               </div>
-              {c.notes && <div className="mt-1.5 text-[10px] text-muted-foreground sm:text-[11px]">{c.notes}</div>}
+              {c.notes && (
+                <div className="mt-1.5 text-[10px] text-muted-foreground sm:text-[11px]">
+                  {c.notes}
+                </div>
+              )}
             </div>
           ))}
           {filtered.length === 0 && (

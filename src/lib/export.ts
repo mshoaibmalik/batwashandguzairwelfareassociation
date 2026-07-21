@@ -41,12 +41,12 @@ export function exportFamilyPaymentPdf(opts: {
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text("Guzair and Batwash Welfare Association", pageWidth / 2, yPosition, { align: "center" });
-  
+
   yPosition += 8;
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
   doc.text("Welfare Fund Management System", pageWidth / 2, yPosition, { align: "center" });
-  
+
   yPosition += 10;
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
@@ -59,7 +59,7 @@ export function exportFamilyPaymentPdf(opts: {
   doc.setFont("helvetica", "bold");
   doc.text("Family Information", 14, yPosition);
   yPosition += 6;
-  
+
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.text(`Name: ${opts.familyName}`, 14, yPosition);
@@ -90,7 +90,7 @@ export function exportFamilyPaymentPdf(opts: {
 
   // Payment History by Year
   const years = Object.keys(opts.paymentsByYear).sort();
-  
+
   for (const year of years) {
     if (yPosition > 250) {
       doc.addPage();
@@ -101,7 +101,7 @@ export function exportFamilyPaymentPdf(opts: {
     doc.setFontSize(12);
     doc.text(year, 14, yPosition);
     yPosition += 3;
-    
+
     const yearPayments = opts.paymentsByYear[year];
     const tableRows = yearPayments.map((p) => {
       const row: (string | number)[] = [
@@ -144,7 +144,7 @@ export function exportFamilyPaymentPdf(opts: {
   const now = new Date();
   const generatedDate = now.toLocaleDateString("en-GB");
   const generatedTime = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-  
+
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   doc.text(`Generated Date: ${generatedDate}`, 14, 285);

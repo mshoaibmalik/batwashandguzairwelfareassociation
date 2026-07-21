@@ -57,26 +57,26 @@
 :root {
   --radius: 0.875rem;
   /* Brand: teal */
-  --background: oklch(0.984 0.005 230);          /* #F8FAFC */
+  --background: oklch(0.984 0.005 230); /* #F8FAFC */
   --foreground: oklch(0.22 0.04 250);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.04 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.04 250);
-  --primary: oklch(0.51 0.09 184);                /* #0F766E teal-700 */
+  --primary: oklch(0.51 0.09 184); /* #0F766E teal-700 */
   --primary-foreground: oklch(0.99 0 0);
-  --primary-glow: oklch(0.72 0.13 184);           /* #14B8A6 */
-  --secondary: oklch(0.72 0.13 184);              /* #14B8A6 */
+  --primary-glow: oklch(0.72 0.13 184); /* #14B8A6 */
+  --secondary: oklch(0.72 0.13 184); /* #14B8A6 */
   --secondary-foreground: oklch(0.99 0 0);
   --muted: oklch(0.96 0.01 230);
   --muted-foreground: oklch(0.5 0.03 250);
   --accent: oklch(0.94 0.04 184);
   --accent-foreground: oklch(0.3 0.07 184);
-  --destructive: oklch(0.58 0.22 25);             /* #DC2626 */
+  --destructive: oklch(0.58 0.22 25); /* #DC2626 */
   --destructive-foreground: oklch(0.99 0 0);
-  --success: oklch(0.63 0.18 145);                /* #16A34A */
+  --success: oklch(0.63 0.18 145); /* #16A34A */
   --success-foreground: oklch(0.99 0 0);
-  --warning: oklch(0.68 0.18 45);                 /* #EA580C */
+  --warning: oklch(0.68 0.18 45); /* #EA580C */
   --warning-foreground: oklch(0.99 0 0);
   --border: oklch(0.92 0.01 240);
   --input: oklch(0.92 0.01 240);
@@ -164,7 +164,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -175,27 +175,27 @@
   .mobile-padding {
     @apply px-3 py-2 sm:px-4 sm:py-3;
   }
-  
+
   .mobile-text {
     @apply text-xs sm:text-sm;
   }
-  
+
   .mobile-heading {
     @apply text-lg sm:text-xl lg:text-2xl;
   }
-  
+
   .mobile-card {
     @apply p-3 sm:p-4 lg:p-5;
   }
-  
+
   .mobile-grid {
     @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
   }
-  
+
   .mobile-stack {
     @apply flex-col sm:flex-row;
   }
-  
+
   .mobile-gap {
     @apply gap-2 sm:gap-3 lg:gap-4;
   }
@@ -203,26 +203,29 @@
 
 /* Improved touch targets for mobile */
 @media (max-width: 640px) {
-  button, a, [role="button"] {
+  button,
+  a,
+  [role="button"] {
     @apply min-h-[44px] min-w-[44px];
   }
-  
+
   .card-soft {
     @apply rounded-xl;
   }
-  
+
   /* Better scrolling on mobile */
   .overflow-x-auto {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
   }
-  
+
   /* Improve table readability on mobile */
   table {
     @apply text-xs;
   }
-  
-  th, td {
+
+  th,
+  td {
     @apply px-2 py-2;
   }
 }
@@ -247,7 +250,10 @@
 }
 
 /* Better focus states for accessibility */
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
   @apply outline-2 outline-offset-2 outline-primary;
 }
 

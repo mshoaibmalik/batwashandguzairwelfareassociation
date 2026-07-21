@@ -31,7 +31,12 @@ const queryClient = new QueryClient();
 
 function AdminRoute({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
+        Loading...
+      </div>
+    );
   if (!user) return <Navigate to="/admin/login" replace />;
   return <>{children}</>;
 }
@@ -55,13 +60,62 @@ function App() {
 
                 {/* Admin routes */}
                 <Route path="/admin/login" element={<LoginPage />} />
-                <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-                <Route path="/admin/families" element={<AdminRoute><AdminFamilies /></AdminRoute>} />
-                <Route path="/admin/families/:familyId" element={<AdminRoute><AdminFamilyDetail /></AdminRoute>} />
-                <Route path="/admin/collections" element={<AdminRoute><AdminCollections /></AdminRoute>} />
-                <Route path="/admin/events" element={<AdminRoute><AdminEvents /></AdminRoute>} />
-                <Route path="/admin/expenses" element={<AdminRoute><AdminExpenses /></AdminRoute>} />
-                <Route path="/admin/reports" element={<AdminRoute><AdminReports /></AdminRoute>} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <AdminRoute>
+                      <AdminDashboard />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/families"
+                  element={
+                    <AdminRoute>
+                      <AdminFamilies />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/families/:familyId"
+                  element={
+                    <AdminRoute>
+                      <AdminFamilyDetail />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/collections"
+                  element={
+                    <AdminRoute>
+                      <AdminCollections />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/events"
+                  element={
+                    <AdminRoute>
+                      <AdminEvents />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/expenses"
+                  element={
+                    <AdminRoute>
+                      <AdminExpenses />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/reports"
+                  element={
+                    <AdminRoute>
+                      <AdminReports />
+                    </AdminRoute>
+                  }
+                />
 
                 {/* 404 fallback */}
                 <Route path="*" element={<NotFound />} />

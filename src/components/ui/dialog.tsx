@@ -45,8 +45,8 @@ const DialogContent = React.forwardRef<
         if (
           target.closest('[role="listbox"]') ||
           target.closest('[role="option"]') ||
-          target.closest('[data-radix-select-content]') ||
-          target.closest('[data-radix-popper-content-wrapper]')
+          target.closest("[data-radix-select-content]") ||
+          target.closest("[data-radix-popper-content-wrapper]")
         ) {
           e.preventDefault();
         }
@@ -57,10 +57,10 @@ const DialogContent = React.forwardRef<
         if (
           target.closest('[role="listbox"]') ||
           target.closest('[role="option"]') ||
-          target.closest('[data-radix-select-content]') ||
-          target.closest('[data-radix-popper-content-wrapper]') ||
-          target.closest('[data-radix-menu-content]') ||
-          target.closest('[data-radix-dropdown-menu-content]')
+          target.closest("[data-radix-select-content]") ||
+          target.closest("[data-radix-popper-content-wrapper]") ||
+          target.closest("[data-radix-menu-content]") ||
+          target.closest("[data-radix-dropdown-menu-content]")
         ) {
           e.preventDefault();
         }
