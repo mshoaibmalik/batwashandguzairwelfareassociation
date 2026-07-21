@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { AdminShell } from "@/components/layout/AdminShell";
 import { store, useStore, type Family, type FamilyStatus } from "@/lib/store";
 import { useT } from "@/lib/i18n";
@@ -56,11 +57,11 @@ export default function AdminFamilies() {
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input className="h-11 pl-9" placeholder={t("search") + "…"} value={q} onChange={(e) => setQ(e.target.value)} />
+            <Input className="h-10 pl-9 sm:h-11" placeholder={t("search") + "…"} value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" />{t("add")}</Button>
+              <Button className="h-10 px-3 sm:h-11 sm:px-4" onClick={openCreate}><Plus className="mr-1 h-4 w-4" /><span className="hidden sm:inline">{t("add")}</span></Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -90,23 +91,23 @@ export default function AdminFamilies() {
         </div>
 
         {list.length === 0 ? <EmptyState message={t("noData")} /> : (
-          <ul className="space-y-2">
+          <ul className="space-y-2 sm:space-y-3">
             {list.map((f) => (
-              <li key={f.id} className="card-soft p-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <div className="truncate text-sm font-semibold">{f.name}</div>
-                      <Badge variant={f.status === "active" ? "default" : "secondary"} className="h-4 px-1.5 text-[10px]">{t(f.status)}</Badge>
+              <li key={f.id} className="card-soft p-3 sm:p-4">
+                <Link to={`/admin/families/${f.id}`} className="flex items-start justify-between gap-2 hover:bg-muted/20 -mx-1 px-1 py-1 rounded-xl transition-colors">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <div className="truncate text-sm font-semibold text-primary">{f.name}</div>
+                      <Badge variant={f.status === "active" ? "default" : "secondary"} className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{t(f.status)}</Badge>
                     </div>
-                    <div className="truncate text-[11px] text-muted-foreground">{f.head} · {f.phone}</div>
-                    <div className="truncate text-[11px] text-muted-foreground">{f.address}</div>
+                    <div className="truncate text-[11px] text-muted-foreground sm:text-xs">{f.head} · {f.phone}</div>
+                    <div className="truncate text-[11px] text-muted-foreground sm:text-xs">{f.address}</div>
                   </div>
                   <div className="flex shrink-0 gap-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(f)}><Pencil className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => { e.preventDefault(); openEdit(f); }}><Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={(e) => e.preventDefault()}><Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
@@ -120,7 +121,7 @@ export default function AdminFamilies() {
                       </AlertDialogContent>
                     </AlertDialog>
                   </div>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>

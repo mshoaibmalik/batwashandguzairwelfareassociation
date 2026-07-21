@@ -56,7 +56,7 @@ export default function AdminEvents() {
       <div className="mb-3 flex justify-end">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" />{t("add")}</Button>
+            <Button className="h-10 sm:h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" /><span className="hidden sm:inline">{t("add")}</span></Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>{editing ? t("edit") : t("add")} {t("events")}</DialogTitle></DialogHeader>
@@ -82,23 +82,23 @@ export default function AdminEvents() {
       </div>
 
       {list.length === 0 ? <EmptyState message={t("noData")} /> : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 sm:space-y-3">
           {list.map((e) => (
-            <li key={e.id} className="card-soft p-3">
+            <li key={e.id} className="card-soft p-3 sm:p-4">
               <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2"><Badge>{t("bereavement")}</Badge></div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 sm:gap-2"><Badge className="text-[9px] sm:text-[10px]">{t("bereavement")}</Badge></div>
                   <div className="mt-1 truncate text-sm font-semibold">{familyName(e.familyId)}</div>
-                  <div className="truncate text-[11px] text-muted-foreground">{formatDate(e.eventDate)} · {e.description}</div>
+                  <div className="truncate text-[10px] text-muted-foreground sm:text-[11px]">{formatDate(e.eventDate)} · {e.description}</div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
                   <div className="text-right">
-                    <div className="text-sm font-bold text-destructive">{formatRs(eventTotal(e.id))}</div>
-                    <div className="text-[10px] text-muted-foreground">expenses</div>
+                    <div className="text-xs sm:text-sm font-bold text-destructive">{formatRs(eventTotal(e.id))}</div>
+                    <div className="text-[9px] text-muted-foreground sm:text-[10px]">expenses</div>
                   </div>
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(e)}><Pencil className="h-4 w-4" /></Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(e)}><Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button>
                   <AlertDialog>
-                    <AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-4 w-4" /></Button></AlertDialogTrigger>
+                    <AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button></AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>{t("confirmDelete")}</AlertDialogTitle>

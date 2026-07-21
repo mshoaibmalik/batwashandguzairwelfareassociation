@@ -61,7 +61,7 @@ export default function AdminExpenses() {
       <div className="mb-3 flex justify-end">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" />{t("add")}</Button>
+            <Button className="h-10 sm:h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" /><span className="hidden sm:inline">{t("add")}</span></Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>{editing ? t("edit") : t("add")} {t("expenses")}</DialogTitle></DialogHeader>
@@ -90,23 +90,23 @@ export default function AdminExpenses() {
         </Dialog>
       </div>
       {list.length === 0 ? <EmptyState message={t("noData")} /> : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 sm:space-y-3">
           {list.map((e) => (
-            <li key={e.id} className="card-soft p-3">
+            <li key={e.id} className="card-soft p-3 sm:p-4">
               <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
-                  <div className="truncate text-sm font-semibold">{eventLabel(e.eventId)}</div>
-                  <div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    <Badge variant="outline" className="h-4 px-1.5 text-[10px]">{t(e.category)}</Badge>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium">{eventLabel(e.eventId)}</div>
+                  <div className="mt-0.5 flex items-center gap-2 text-[10px] text-muted-foreground sm:text-[11px]">
+                    <Badge variant="outline" className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{t(e.category)}</Badge>
                     <span>{formatDate(e.date)}</span>
                   </div>
-                  {e.description ? <div className="mt-1 truncate text-[11px] text-muted-foreground">{e.description}</div> : null}
+                  {e.description && <div className="mt-1 text-[10px] text-muted-foreground sm:text-[11px]">{e.description}</div>}
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
-                  <div className="text-sm font-semibold text-destructive">−{formatRs(e.amount)}</div>
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(e)}><Pencil className="h-4 w-4" /></Button>
+                  <div className="text-xs sm:text-sm font-semibold text-destructive">−{formatRs(e.amount)}</div>
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(e)}><Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button>
                   <AlertDialog>
-                    <AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-4 w-4" /></Button></AlertDialogTrigger>
+                    <AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" /></Button></AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader><AlertDialogTitle>{t("confirmDelete")}</AlertDialogTitle></AlertDialogHeader>
                       <AlertDialogFooter>

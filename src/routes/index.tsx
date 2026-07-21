@@ -22,10 +22,10 @@ export default function Home() {
 
   return (
     <PublicShell>
-      <div className="space-y-4">
-        <div className="rounded-3xl bg-gradient-to-br from-primary via-primary to-primary-glow p-5 text-primary-foreground shadow-card">
-          <div className="text-xs font-medium uppercase tracking-wide opacity-80">{t("fundBalance")}</div>
-          <div className="mt-1 text-3xl font-extrabold tracking-tight">{formatRs(sum.balance)}</div>
+      <div className="space-y-3 sm:space-y-4">
+        <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary via-primary to-primary-glow p-4 text-primary-foreground shadow-card sm:p-5">
+          <div className="text-[10px] font-medium uppercase tracking-wide opacity-80 sm:text-xs">{t("fundBalance")}</div>
+          <div className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">{formatRs(sum.balance)}</div>
           <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
             <div className="rounded-xl bg-white/15 p-2">
               <div className="flex items-center gap-1 opacity-90"><TrendingUp className="h-3 w-3" />{t("totalCollections")}</div>
@@ -38,7 +38,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
           <StatCard label={t("totalFamilies")} value={sum.totalFamilies} icon={Users} tone="success" hint={`${sum.activeFamilies} ${t("active").toLowerCase()}`} />
           <StatCard label={t("welfareEvents")} value={sum.totalEvents} icon={HeartHandshake} tone="warning" />
         </div>
@@ -50,15 +50,15 @@ export default function Home() {
           {recentColl.length === 0 ? <EmptyState message={t("noData")} /> : (
             <ul className="divide-y divide-border/60">
               {recentColl.map((c) => (
-                <li key={c.id} className="flex items-center justify-between py-2.5">
-                  <div className="min-w-0">
-                    <div className="truncate text-sm font-medium">{familyName(c.familyId)}</div>
-                    <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                <li key={c.id} className="flex items-center justify-between py-2 sm:py-2.5">
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-xs font-medium sm:text-sm">{familyName(c.familyId)}</div>
+                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground sm:text-[11px]">
                       <span>{formatDate(c.date)}</span>
-                      <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{t(c.type)}</Badge>
+                      <Badge variant="secondary" className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{t(c.type)}</Badge>
                     </div>
                   </div>
-                  <div className="shrink-0 text-sm font-semibold text-success">+{formatRs(c.amount)}</div>
+                  <div className="shrink-0 text-xs font-semibold text-success sm:text-sm">+{formatRs(c.amount)}</div>
                 </li>
               ))}
             </ul>

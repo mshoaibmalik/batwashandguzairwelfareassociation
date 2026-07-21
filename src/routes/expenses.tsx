@@ -23,31 +23,31 @@ export default function Expenses() {
 
   return (
     <PublicShell>
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight">{t("expenses")}</h2>
+      <div className="space-y-3 sm:space-y-4">
+        <h2 className="text-lg sm:text-xl font-bold tracking-tight">{t("expenses")}</h2>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder={t("search")}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            className="pl-9"
+            className="h-10 pl-9 sm:h-11"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 sm:space-y-3">
           {filtered.map((e) => (
-            <div key={e.id} className="rounded-xl border border-border/60 p-3">
-              <div className="flex items-center justify-between">
-                <div className="min-w-0">
+            <div key={e.id} className="card-soft p-3 sm:p-4">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
                   <div className="truncate text-sm font-medium">{eventLabel(e.eventId)}</div>
-                  <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground sm:text-[11px]">
                     <span>{formatDate(e.date)}</span>
-                    <Badge variant="outline" className="h-4 px-1.5 text-[10px]">{t(e.category)}</Badge>
+                    <Badge variant="outline" className="h-3.5 px-1.5 text-[9px] sm:h-4 sm:text-[10px]">{t(e.category)}</Badge>
                   </div>
                 </div>
                 <div className="shrink-0 text-sm font-semibold text-destructive">−{formatRs(e.amount)}</div>
               </div>
-              {e.description && <div className="mt-1 text-[11px] text-muted-foreground">{e.description}</div>}
+              {e.description && <div className="mt-1.5 text-[10px] text-muted-foreground sm:text-[11px]">{e.description}</div>}
             </div>
           ))}
           {filtered.length === 0 && (

@@ -97,7 +97,7 @@ export default function AdminCollections() {
       <div className="mb-3 flex justify-end">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" />{t("add")}</Button>
+            <Button className="h-10 sm:h-11" onClick={openCreate}><Plus className="mr-1 h-4 w-4" /><span className="hidden sm:inline">{t("add")}</span></Button>
           </DialogTrigger>
           <DialogContent className="max-h-[90vh] overflow-y-auto">
             <DialogHeader><DialogTitle>{editing ? t("edit") : t("add")} {t("collections")}</DialogTitle></DialogHeader>

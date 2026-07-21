@@ -17,9 +17,11 @@ import Events from "@/routes/events";
 import EventDetail from "@/routes/events.$eventId";
 import Expenses from "@/routes/expenses";
 import Families from "@/routes/families";
+import FamilyDetail from "@/routes/families.$familyId";
 import LoginPage from "@/routes/admin.login";
 import AdminDashboard from "@/routes/admin.dashboard";
 import AdminFamilies from "@/routes/admin.families";
+import AdminFamilyDetail from "@/routes/admin.families.$familyId";
 import AdminCollections from "@/routes/admin.collections";
 import AdminEvents from "@/routes/admin.events";
 import AdminExpenses from "@/routes/admin.expenses";
@@ -49,11 +51,13 @@ function App() {
                 <Route path="/events/:eventId" element={<EventDetail />} />
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/families" element={<Families />} />
+                <Route path="/families/:familyId" element={<FamilyDetail />} />
 
                 {/* Admin routes */}
                 <Route path="/admin/login" element={<LoginPage />} />
                 <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
                 <Route path="/admin/families" element={<AdminRoute><AdminFamilies /></AdminRoute>} />
+                <Route path="/admin/families/:familyId" element={<AdminRoute><AdminFamilyDetail /></AdminRoute>} />
                 <Route path="/admin/collections" element={<AdminRoute><AdminCollections /></AdminRoute>} />
                 <Route path="/admin/events" element={<AdminRoute><AdminEvents /></AdminRoute>} />
                 <Route path="/admin/expenses" element={<AdminRoute><AdminExpenses /></AdminRoute>} />

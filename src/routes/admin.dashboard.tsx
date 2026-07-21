@@ -37,8 +37,8 @@ export default function AdminDashboard() {
 
   return (
     <AdminShell title={t("dashboard")}>
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
+      <div className="space-y-3 sm:space-y-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
           <StatCard label={t("fundBalance")} value={formatRs(sum.balance)} icon={TrendingUp} tone="primary" />
           <StatCard label={t("totalCollections")} value={formatRs(sum.totalCollections)} icon={Wallet} tone="success" />
           <StatCard label={t("totalExpenses")} value={formatRs(sum.totalExpenses)} icon={Receipt} tone="danger" />
@@ -46,14 +46,14 @@ export default function AdminDashboard() {
         </div>
 
         <SectionCard title="Collections vs Expenses">
-          <div className="h-56 w-full">
+          <div className="h-48 sm:h-56 w-full">
             <ResponsiveContainer>
               <BarChart data={monthly}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                <YAxis tick={{ fontSize: 10 }} />
+                <XAxis dataKey="month" tick={{ fontSize: 9 }} />
+                <YAxis tick={{ fontSize: 9 }} />
                 <Tooltip formatter={(v: number) => formatRs(v)} />
-                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
                 <Bar dataKey="collections" fill="#0F766E" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="expenses" fill="#DC2626" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -63,10 +63,10 @@ export default function AdminDashboard() {
 
         <SectionCard title="Expense Categories">
           {catData.length === 0 ? <EmptyState message={t("noData")} /> : (
-            <div className="h-56 w-full">
+            <div className="h-48 sm:h-56 w-full">
               <ResponsiveContainer>
                 <PieChart>
-                  <Pie data={catData} dataKey="value" nameKey="name" outerRadius={80} label={(p) => p.name}>
+                  <Pie data={catData} dataKey="value" nameKey="name" outerRadius={70} label={(p) => p.name}>
                     {catData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                   </Pie>
                   <Tooltip formatter={(v: number) => formatRs(v)} />
@@ -79,12 +79,12 @@ export default function AdminDashboard() {
         <SectionCard title="Recent Transactions">
           <ul className="divide-y divide-border/60">
             {recent.map((r) => (
-              <li key={r.id} className="flex items-center justify-between py-2.5">
-                <div>
-                  <div className="text-sm font-medium">{r.label}</div>
-                  <div className="text-[11px] text-muted-foreground">{formatDate(r.date)}</div>
+              <li key={r.id} className="flex items-center justify-between py-2 sm:py-2.5">
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs sm:text-sm font-medium">{r.label}</div>
+                  <div className="text-[10px] text-muted-foreground sm:text-[11px]">{formatDate(r.date)}</div>
                 </div>
-                <div className={`text-sm font-semibold ${r.type === "in" ? "text-success" : "text-destructive"}`}>
+                <div className={`text-xs sm:text-sm font-semibold ${r.type === "in" ? "text-success" : "text-destructive"}`}>
                   {r.type === "in" ? "+" : "−"}{formatRs(r.amount)}
                 </div>
               </li>

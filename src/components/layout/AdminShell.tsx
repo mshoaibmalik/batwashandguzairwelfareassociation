@@ -48,12 +48,12 @@ export function AdminShell({ children, title }: { children: ReactNode; title?: s
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-md flex-col bg-background sm:max-w-2xl lg:max-w-5xl">
-      <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-border/60 bg-background/95 px-3 py-3 backdrop-blur">
+      <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-border/60 bg-background/95 px-3 py-2.5 backdrop-blur sm:px-4 sm:py-3">
         <div className="flex flex-1 items-center justify-start">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-9 w-9">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
+                <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 p-0">
@@ -112,23 +112,24 @@ export function AdminShell({ children, title }: { children: ReactNode; title?: s
 
         {/* Centered logo */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <img src={logo} alt="Logo" className="h-8 w-8 rounded-lg object-cover" />
+          <img src={logo} alt="Logo" className="h-7 w-7 rounded-lg object-cover sm:h-8 sm:w-8" />
         </div>
 
         <div className="flex flex-1 items-center justify-end">
           <Button
             variant="ghost"
             size="sm"
-            className="h-9 px-2 text-xs"
+            className="h-8 px-2 text-xs"
             onClick={() => setLang(lang === "en" ? "ur" : "en")}
           >
-            <Globe className="mr-1 h-4 w-4" />
-            {lang === "en" ? "اردو" : "EN"}
+            <Globe className="mr-1 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">{lang === "en" ? "اردو" : "EN"}</span>
+            <span className="sm:hidden">{lang === "en" ? "UR" : "EN"}</span>
           </Button>
         </div>
       </header>
 
-      <main className="flex-1 px-4 pb-10 pt-4">{children}</main>
+      <main className="flex-1 px-3 pb-10 pt-3 sm:px-4 sm:pb-10 sm:pt-4">{children}</main>
     </div>
   );
 }
