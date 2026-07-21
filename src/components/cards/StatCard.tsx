@@ -22,15 +22,15 @@ export function StatCard({
     muted: "from-muted to-muted text-foreground",
   };
   return (
-    <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br p-4 shadow-card ${tones[tone]}`}>
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <div className="text-[11px] font-medium uppercase tracking-wide opacity-80">{label}</div>
-          <div className="mt-1 truncate text-xl font-bold leading-tight">{value}</div>
-          {hint ? <div className="mt-0.5 text-[11px] opacity-80">{hint}</div> : null}
+    <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br p-4 sm:p-5 shadow-lg ${tones[tone]}`}>
+      <div className="relative z-10 flex items-center justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] sm:text-xs font-medium uppercase tracking-wide opacity-90">{label}</div>
+          <div className="mt-1.5 text-lg sm:text-2xl font-bold leading-tight">{value}</div>
+          {hint ? <div className="text-[10px] sm:text-xs opacity-80 mt-1">{hint}</div> : null}
         </div>
-        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/15">
-          <Icon className="h-5 w-5" />
+        <div className="shrink-0">
+          <Icon className="h-6 w-6 sm:h-7 sm:w-7 opacity-90" />
         </div>
       </div>
     </div>

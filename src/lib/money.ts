@@ -3,6 +3,17 @@ export function formatRs(value: number): string {
   return "Rs. " + n.toLocaleString("en-PK");
 }
 
+export function formatRsShort(value: number): string {
+  const n = Math.round(Number(value) || 0);
+  if (n >= 1000000) {
+    return "Rs. " + (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+  }
+  if (n >= 1000) {
+    return "Rs. " + (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+  }
+  return "Rs. " + n.toLocaleString("en-PK");
+}
+
 export function formatDate(value: string | Date | undefined | null): string {
   if (!value) return "—";
   const d = typeof value === "string" ? new Date(value) : value;
