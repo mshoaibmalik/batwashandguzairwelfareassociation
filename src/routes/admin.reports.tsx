@@ -64,13 +64,15 @@ export default function ReportsPage() {
   return (
     <AdminShell title={t("reports")}>
       <Tabs defaultValue="balance">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="balance">Balance</TabsTrigger>
-          <TabsTrigger value="coll">Coll.</TabsTrigger>
-          <TabsTrigger value="exp">Exp.</TabsTrigger>
-          <TabsTrigger value="fam">Fam.</TabsTrigger>
-          <TabsTrigger value="insights">{t("collectionInsights")}</TabsTrigger>
-        </TabsList>
+        <div className="w-full overflow-x-auto scrollbar-hide -mx-3 sm:mx-0 mb-3">
+          <TabsList className="flex w-max min-w-full gap-1.5 px-3 sm:px-0">
+            <TabsTrigger value="balance" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Balance</TabsTrigger>
+            <TabsTrigger value="coll" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Coll.</TabsTrigger>
+            <TabsTrigger value="exp" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Exp.</TabsTrigger>
+            <TabsTrigger value="fam" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">Fam.</TabsTrigger>
+            <TabsTrigger value="insights" className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-2 sm:py-2 whitespace-nowrap">{t("collectionInsights")}</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value="balance" className="mt-3">
           <Report title="Fund Balance" headers={["Metric", "Value"]} rows={balanceRows} filename="balance-report" />
         </TabsContent>
@@ -230,81 +232,85 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <Select value={String(selectedYear)} onValueChange={(v) => setSelectedYear(Number(v))}>
-          <SelectTrigger className="h-9 w-32">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {years.map((year) => <SelectItem key={year} value={String(year)}>{year}</SelectItem>)}
-          </SelectContent>
-        </Select>
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Select value={String(selectedYear)} onValueChange={(v) => setSelectedYear(Number(v))}>
+            <SelectTrigger className="h-10 w-full sm:w-auto sm:min-w-[100px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((year) => <SelectItem key={year} value={String(year)}>{year}</SelectItem>)}
+            </SelectContent>
+          </Select>
 
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder={t("search") + "..."}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-9 pl-9"
-          />
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder={t("search") + "..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-10 pl-9"
+            />
+          </div>
+
+          <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
+            <SelectTrigger className="h-10 w-full sm:w-auto sm:min-w-[100px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="paid">{t("paid")}</SelectItem>
+              <SelectItem value="unpaid">{t("unpaid")}</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
-          <SelectTrigger className="h-9 w-32">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t("all")}</SelectItem>
-            <SelectItem value="paid">{t("paid")}</SelectItem>
-            <SelectItem value="unpaid">{t("unpaid")}</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-3 text-[10px] sm:text-[11px] text-muted-foreground">
+            <div className="flex items-center gap-1">
+              <div className="h-3 w-3 rounded bg-success"></div>
+              <span>{t("paid")}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="h-3 w-3 rounded bg-destructive"></div>
+              <span>{t("unpaid")}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="h-3 w-3 rounded bg-muted"></div>
+              <span>{t("notApplicable")}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="h-3 w-3 rounded bg-border"></div>
+              <span>{t("futureMonth")}</span>
+            </div>
+          </div>
 
-        <div className="flex gap-1">
-          <Button size="sm" variant="outline" className="h-9" onClick={handleExportPdf}>
-            <FileDown className="mr-1 h-3 w-3" />PDF
-          </Button>
-          <Button size="sm" variant="outline" className="h-9" onClick={handleExportExcel}>
-            <FileSpreadsheet className="mr-1 h-3 w-3" />Excel
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <div className="h-3 w-3 rounded bg-success"></div>
-          <span>{t("paid")}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="h-3 w-3 rounded bg-destructive"></div>
-          <span>{t("unpaid")}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="h-3 w-3 rounded bg-muted"></div>
-          <span>{t("notApplicable")}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="h-3 w-3 rounded bg-border"></div>
-          <span>{t("futureMonth")}</span>
+          <div className="flex gap-2">
+            <Button size="sm" variant="outline" className="h-9 flex-1 sm:flex-none" onClick={handleExportPdf}>
+              <FileDown className="mr-1 h-3 w-3" />PDF
+            </Button>
+            <Button size="sm" variant="outline" className="h-9 flex-1 sm:flex-none" onClick={handleExportExcel}>
+              <FileSpreadsheet className="mr-1 h-3 w-3" />Excel
+            </Button>
+          </div>
         </div>
       </div>
 
       <div className="overflow-x-auto -mx-3 sm:mx-0">
-        <div className="min-w-[600px] px-3 sm:px-0">
-          <div className="grid grid-cols-[120px_repeat(12,1fr)] gap-0.5">
-            <div className="sticky left-0 z-10 bg-background p-1.5 sm:p-2 text-[10px] sm:text-xs font-semibold">
+        <div className="min-w-[640px] px-3 sm:px-0">
+          <div className="grid grid-cols-[100px_repeat(12,1fr)] gap-0.5">
+            <div className="sticky left-0 z-10 bg-background p-1 sm:p-1.5 text-[9px] sm:text-[10px] font-semibold">
               {t("family")}
             </div>
             {MONTHS.map((month, idx) => (
-              <div key={month} className={`p-1.5 sm:p-2 text-center text-[9px] sm:text-[10px] font-medium ${idx === currentMonth ? "bg-primary/10 text-primary" : "bg-muted/50"}`}>
+              <div key={month} className={`p-1 sm:p-1.5 text-center text-[8px] sm:text-[9px] font-medium ${idx === currentMonth ? "bg-primary/10 text-primary" : "bg-muted/50"}`}>
                 {month.slice(0, 3)}
               </div>
             ))}
 
             {filteredFamilies.map((family: any) => (
               <>
-                <div key={family.id} className="sticky left-0 z-10 bg-background p-1.5 sm:p-2 text-[10px] sm:text-xs font-medium">
+                <div key={family.id} className="sticky left-0 z-10 bg-background p-1 sm:p-1.5 text-[9px] sm:text-[10px] font-medium truncate">
                   {family.name}
                 </div>
                 {MONTHS.map((month, idx) => {
@@ -316,10 +322,10 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                     return (
                       <div
                         key={month}
-                        className="flex h-8 sm:h-10 items-center justify-center rounded bg-border/50"
+                        className="flex h-7 sm:h-9 items-center justify-center rounded bg-border/50"
                         title={`${family.name} - ${month} ${selectedYear}`}
                       >
-                        <span className="text-[9px] sm:text-[10px] text-muted-foreground">—</span>
+                        <span className="text-[8px] sm:text-[9px] text-muted-foreground">—</span>
                       </div>
                     );
                   }
@@ -328,9 +334,9 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                     return (
                       <div
                         key={month}
-                        className="flex h-8 sm:h-10 items-center justify-center rounded bg-muted/30"
+                        className="flex h-7 sm:h-9 items-center justify-center rounded bg-muted/30"
                       >
-                        <span className="text-[9px] sm:text-[10px] text-muted-foreground">N/A</span>
+                        <span className="text-[8px] sm:text-[9px] text-muted-foreground">N/A</span>
                       </div>
                     );
                   }
@@ -341,7 +347,7 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                   return (
                     <div
                       key={month}
-                      className={`flex h-8 sm:h-10 cursor-pointer items-center justify-center rounded transition-colors ${
+                      className={`flex h-7 sm:h-9 cursor-pointer items-center justify-center rounded transition-colors ${
                         status === "paid"
                           ? "bg-success/20 hover:bg-success/30"
                           : "bg-destructive/20 hover:bg-destructive/30"
@@ -351,7 +357,7 @@ function CollectionInsights({ data, years, currentYear }: { data: any; years: nu
                       onMouseLeave={() => setHoveredCell(null)}
                       title={isHovered ? (status === "paid" ? t("paymentReceived") : t("paymentNotReceived")) : ""}
                     >
-                      <span className="text-xs sm:text-sm font-bold">{status === "paid" ? "✔" : "✖"}</span>
+                      <span className="text-[10px] sm:text-xs font-bold">{status === "paid" ? "✔" : "✖"}</span>
                     </div>
                   );
                 })}

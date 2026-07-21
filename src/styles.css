@@ -158,6 +158,18 @@
   padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
 }
 
+/* Hide scrollbar for tab navigation */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Mobile-first responsive utilities */
 @layer utilities {
   .mobile-padding {
